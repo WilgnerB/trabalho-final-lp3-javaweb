@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:f="http://xmlns.jcp.org/jsf/core"
+             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+             template="template.xhtml">
+
+    <h:form>
+        <p:messages autoUpdate="true" showDetail="true"></p:messages>
+        <p:fieldset legend="Objetos">
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton value="Novo" action="#{produtoBean.novo()}" update="@form"></p:commandButton>
+                    <p:commandButton value="Salvar" action="#{produtoBean.salvar()}" disabled="#{produtoBean.busca == true}" update="@form"></p:commandButton>
+                    <p:commandButton value="Buscar" action="#{produtoBean.buscar()}" update="@form"></p:commandButton>
+                </p:toolbarGroup>
+            </p:toolbar>
+            <p:panelGrid columns="2" rendered="#{produtoBean.busca == false}">
+                <h:outputLabel value="Nome Do Produto"></h:outputLabel>
+                <p:inputText value="#{produtoBean.entidade.nmProduto}"></p:inputText>
+
+                <h:outputLabel value="Quantidade"></h:outputLabel>
+                <p:inputText value="#{produtoBean.entidade.qtdProduto}"></p:inputText>
+
+                <h:outputLabel value="Valor"></h:outputLabel>
+                <p:inputText value="#{produtoBean.entidade.vlAtual}"></p:inputText>
+            </p:panelGrid>
+            <p:dataTable value="#{produtoBean.entidades}" var="produto" rendered="#{produtoBean.busca == true}">
+                <p:column>
+                    <p:commandButton value="Editar" action="#{produtoBean.editar(produto)}" update="@form"></p:commandButton>
+                    <p:commandButton value="Deletar" action="#{produtoBean.deletar(produto)}" update="@form"></p:commandButton>
+                </p:column>
+                <p:column headerText="Codigo" sortBy="#{produto.cdProduto}">
+                    <h:outputText value="#{produto.cdProduto}"></h:outputText>
+                </p:column>
+                <p:column headerText="Nome" sortBy="#{produto.nmProduto}">
+                    <h:outputText value="#{produto.nmProduto}"></h:outputText>
+                </p:column>
+                <p:column headerText="Quantidade" sortBy="#{produto.qtdProduto}">
+                    <h:outputText value="#{produto.qtdProduto}"></h:outputText>
+                </p:column>
+                <p:column headerText="Valor" sortBy="#{produto.vlAtual}">
+                    <h:outputText value="#{produto.vlAtual}"></h:outputText>
+                </p:column>
+            </p:dataTable>
+        </p:fieldset>
+    </h:form>
+</ui:decorate>
+
